@@ -11,12 +11,15 @@ Install virtualenv
 Setup your virtualenv for this project:
 `virtualenv --python python2.7 venv/`
 Activate it
-`venv/bin/activate`
-
+`source venv/bin/activate`
+Install requirements:
+`pip install -r requirements.txt`
 
 ## Testing
 
 Run the DTMF parsing tests (run against the file audio/output.wav)
 `python -m pytest tests/`
 
+## Run the app
 
+`python dtmfa/app.py`
