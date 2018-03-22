@@ -46,7 +46,7 @@ def listen():
 
 def main():
     """ Runs the main program """
-    #audiodata = listen();
+    audiodata = listen();
     audiodata = "audio/output16.wav"
     print(parse.method4(audiodata))
     return True
