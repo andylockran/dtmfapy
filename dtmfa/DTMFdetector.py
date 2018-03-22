@@ -1,4 +1,12 @@
 ##############################################
+## Modified by: David Luu
+## Last modified: 10/24/2010
+##
+## NOTE: website below incorrect, updated one is
+## http://johnetherton.com/projects/pys60-dtmf-detector
+##
+## Original code info:
+##
 ## last updated: 2/2/2007
 ## 
 ## This is written by John Etherton - john@johnetherton.com
@@ -66,7 +74,7 @@ class DTMFdetector(object):
 
 
 	###########################################
-	## The constructor
+	## The default constructor
 	##
 	## initializes the instance variables
 	## pre-calculates the coefficients
@@ -75,8 +83,8 @@ class DTMFdetector(object):
 		#DEFINE SOME CONSTANTS FOR THE 
 		#GOERTZEL ALGORITHM
 		self.MAX_BINS = 8
-		self.GOERTZEL_N = 210
-		self.SAMPLING_RATE = 16000
+		self.GOERTZEL_N = 92
+		self.SAMPLING_RATE = 8000
 
 		#the frequencies we're looking for
 		self.freqs = [697, 770, 852, 941, 1209, 1336, 1477, 1633]
@@ -87,6 +95,40 @@ class DTMFdetector(object):
 		self.reset()
 		
 		self.calc_coeffs()
+
+
+	###########################################
+	## Custom constructor, added for support
+	## of additional audio file formats
+	##
+	## initializes the instance variables
+	## pre-calculates the coefficients
+	def __init__(self,pfreq,pdebug):
+
+		#DEFINE SOME CONSTANTS FOR THE 
+		#GOERTZEL ALGORITHM
+		self.MAX_BINS = 8
+
+		if pfreq == 16000:
+			#16kHz
+			self.GOERTZEL_N = 210
+			self.SAMPLING_RATE = 16000
+		else:
+			#8kHz default
+			self.GOERTZEL_N = 92
+			self.SAMPLING_RATE = 8000
+
+		#the DTMF frequencies we're looking for
+		self.freqs = [697, 770, 852, 941, 1209, 1336, 1477, 1633]
+
+		#the coefficients
+		self.coefs = [0, 0, 0, 0, 0, 0, 0, 0]
+
+		self.reset()
+		
+		self.calc_coeffs()
+
+		self.debug = pdebug
 
 	
 	###########################################
@@ -182,10 +224,12 @@ class DTMFdetector(object):
 					peak_count = peak_count + 1
 			if peak_count > 2:
 				see_digit = False
-				#print "peak count is to high: ", peak_count
+				if self.debug:
+					print "peak count is to high: ", peak_count
 			
 			if see_digit:
-				#print row_col_ascii_codes[row][col-4] #for debugging
+				if self.debug:
+					print row_col_ascii_codes[row][col-4] #for debugging
 				#stores the character found, and the time in the file in seconds in which the file was found
 				self.characters.append( (row_col_ascii_codes[row][col-4], float(self.sample_index) / float(self.SAMPLING_RATE)) )
 				
@@ -222,7 +266,8 @@ class DTMFdetector(object):
 			currentTime = i[1]
 			timeDelta = currentTime - lastTime
 			
-			print "curr char:", currentChar, "time delta:", timeDelta #for debugging
+			if self.debug:
+				print "curr char:", currentChar, "time delta:", timeDelta #for debugging
 			
 			#check if this is the same char as last time
 			if lastChar == currentChar:
