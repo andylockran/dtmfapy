@@ -4,3 +4,4 @@ venv/
 venv2/
 *.pyc
 *.wav
+.pytest_cache/
