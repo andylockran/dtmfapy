@@ -14,6 +14,13 @@ class TestDTMF(unittest.TestCase):
     def test_dtmf_tone(self):
         """Sample DTMF tone sends a string, DTMF should detect string"""
         input = "708078"
-        sample = "/Users/aloughran/Code/Hackathon/output.wav"
+        sample = "/Users/aloughran/Code/Hackathon/audio/output.wav"
+        result = parse.method5(sample)
+        assert result == input
+
+    def test_dtmf_tone_broken(self):
+        """Sample DTMF tone sends a string, DTMF should detect string"""
+        input = "708078"
+        sample = "/Users/aloughran/Code/Hackathon/audio/brokenoutput.wav"
         result = parse.method5(sample)
         assert result == input
