@@ -1,0 +1,5 @@
+audio/
+examples/
+venv/
+venv2/
+*.pyc
