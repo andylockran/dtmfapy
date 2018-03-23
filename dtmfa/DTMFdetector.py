@@ -59,7 +59,9 @@ import wave
 import struct
 import math
 
+import sys
 
+import pyaudio
 ###############################################
 ## This class is used to detect DTMF tones in a WAV file
 ##
@@ -70,6 +72,14 @@ import math
 ## audio and I've got a bunch of other things to work on right 
 ## now. If you want to add this functionality please go ahead
 ## and do it
+
+
+FORMAT = pyaudio.paInt16
+CHANNELS = 1
+RATE = 8000
+CHUNK = 1
+RECORD_SECONDS = 30
+
 class DTMFdetector(object):
 
 
@@ -228,11 +238,16 @@ class DTMFdetector(object):
 					print "peak count is to high: ", peak_count
 			
 			if see_digit:
+				print("See Digit")
 				if self.debug:
 					print row_col_ascii_codes[row][col-4] #for debugging
 				#stores the character found, and the time in the file in seconds in which the file was found
 				self.characters.append( (row_col_ascii_codes[row][col-4], float(self.sample_index) / float(self.SAMPLING_RATE)) )
-				
+			
+		if len(self.characters) > 1:
+			lastvalue = self.characters[-1]
+			if lastvalue[0] == "#":
+				return "Hash"
 
 	###########################################
 	## This takes the number of characters found and such and 
@@ -330,8 +345,9 @@ class DTMFdetector(object):
 				self.r[i] = (self.q1[i] * self.q1[i]) + (self.q2[i] * self.q2[i]) - (self.coefs[i] * self.q1[i] * self.q2[i])
 				self.q1[i] = 0
 				self.q2[i] = 0
-			self.post_testing()
+			returnval = self.post_testing()
 			self.sample_count = 0
+			return returnval
 			
 
 
@@ -356,9 +372,9 @@ class DTMFdetector(object):
 		
 		file = wave.open(filename)
 
-		#print file.getparams()
+		print file.getparams()
 		totalFrames = file.getnframes()
-	
+		print totalFrames
 		count = 0
 
 
@@ -373,6 +389,33 @@ class DTMFdetector(object):
 		self.clean_up_processing()
 		
 		return self.charStr
+
+	def getDTMFLive(self):
+		self.reset()
+
+		audio = pyaudio.PyAudio()
+		stream = audio.open(
+			format=FORMAT,
+			channels=CHANNELS,
+			rate=RATE,
+			input=True,
+			frames_per_buffer=CHUNK
+		)
+		print "Running..."
+		frames = []
+
+		hash_received = None
+		while hash_received is None:
+			data = stream.read(CHUNK)
+			frames.append(data)
+			(sample,) = struct.unpack("h", data)
+			hash_received = self.goertzel(sample)
+			print(hash_received)
+		stream.close()
+		self.clean_up_processing()
+		print self.charStr
+		print "finished recording"
+		
 
 
 
