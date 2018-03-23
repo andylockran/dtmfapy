@@ -1,11 +1,6 @@
 import wave
 import struct
-from dtmfdecoder import pygoertzel_dtmf
-import dtmfd
 from DTMFdetector import DTMFdetector
-from scipy.io.wavfile import read
-
-import method4py
 
 freq = 8000
 debugFlag = True
