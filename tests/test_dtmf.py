@@ -37,9 +37,18 @@ class TestDTMF(unittest.TestCase):
         """Tests all audio files in the audio folder"""
         cwd = os.getcwd()
         print(cwd)
+        results = []
         for filename in os.listdir('audio/'):
-            expected = re.split('.', filename)[0]
+            expected = re.split('.wav', filename)[0]
             testfile = cwd + "/audio/" + filename
             result = parse.method5(testfile)
-            assert expected==result
+            print("Expected: %s, Received: %s" % (expected, result))
+            if (expected == result):
+                results.append(True)
+            else:
+                results.append(False)
+        print(results)
+        assert(False not in results)
+
+        
         
