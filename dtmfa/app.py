@@ -61,7 +61,7 @@ def static_main():
 
 def main():
     """ Listens dynamically"""
-    data = dtmf.getDTMFLive()
+    return dtmf.getDTMFLive()
 
 
 def parseFile(filename):
