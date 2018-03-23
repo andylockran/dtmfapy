@@ -40,14 +40,14 @@ def listen():
     song = AudioSegment.from_wav(WAVE_OUTPUT_FILENAME)
     song = song - 20
     song.export("quieter.wav", "wav")
-    return "quieter.wav"
+    return "output.wav"
 
 
 
 def main():
     """ Runs the main program """
     audiodata = listen();
-    audiodata = "output.wav"
+    #audiodata = "output.wav"
     print(parse.method5(audiodata))
     return True
     
