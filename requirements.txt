@@ -44,6 +44,7 @@ pydub==0.21.0
 Pygments==2.2.0
 pyparsing==2.2.0
 pytest==3.4.2
+pytest-expect==1.1.0
 python-dateutil==2.7.0
 pytz==2018.3
 pyzmq==17.0.0
@@ -59,6 +60,7 @@ terminado==0.8.1
 testpath==0.3.1
 tornado==5.0.1
 traitlets==4.3.2
+u-msgpack-python==2.4.1
 wcwidth==0.1.7
 webencodings==0.5.1
 widgetsnbextension==3.1.4
