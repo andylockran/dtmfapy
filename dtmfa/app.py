@@ -1,7 +1,7 @@
 import pyaudio
 import wave
-
-from pydub import AudioSegment
+import argparse
+#from pydub import AudioSegment
 
 import parse
 
@@ -38,20 +38,44 @@ def listen():
     waveFile.close()
     return WAVE_OUTPUT_FILENAME
 
-def quieter(audiofile):
-    song = AudioSegment.from_wav(audiofile)
-    song = song - 10
-    song.export("quieter.wav", "wav")
-    return "quiter.wav"
+# def quieter(audiofile):
+#     song = AudioSegment.from_wav(audiofile)
+#     song = song + 20
+#     song.export("quieter.wav", "wav")
+#     return "quieter.wav"
 
 def main():
     """ Runs the main program """
     audiodata = listen();
-    #audiodata = "output.wav"
+    #audiodata = quieter('output.wav') ## Used to reduce the dB of the audio.. Not really required now
     parse.method5(audiodata)
     return True
-    
+
+
+def parseFile(filename):
+    parse.method5(filename)
+    return True
 
 
 if __name__ == "__main__":
-    main();
+    
+    parser = argparse.ArgumentParser(
+        description="Copy Seed Data"
+    )
+
+    parser.add_argument(
+        "-f",
+        "--filename",
+        help="The filename to parse",
+        type=str
+    )
+
+    args = parser.parse_args()
+    print(args)
+    if not (vars(args))['filename']:
+        main();
+    else:
+        filename = (vars(args))['filename']
+        parseFile(filename)
+
+    

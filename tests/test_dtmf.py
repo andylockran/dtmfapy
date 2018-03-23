@@ -42,11 +42,13 @@ class TestDTMF(unittest.TestCase):
             expected = re.split('.wav', filename)[0]
             testfile = cwd + "/audio/" + filename
             result = parse.method5(testfile)
-            print("Expected: %s, Received: %s" % (expected, result))
             if (expected == result):
+                results.append(filename)
                 results.append(True)
             else:
+                results.append(filename)
                 results.append(False)
+                print("Expected: %s, Received: %s" % (expected, result))
         print(results)
         assert(False not in results)
 
