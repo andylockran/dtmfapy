@@ -22,6 +22,8 @@ Install requirements:
 Run the DTMF parsing tests (run against the file audio/output.wav)
 `python -m pytest tests/`
 
+If you add your files to audio/ with the filename '${expectedcode}.wav' - then the tests will pick them up.
+
 ## Run the app
 
 `python dtmfa/app.py`
