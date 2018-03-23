@@ -9,7 +9,7 @@ FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 8000
 CHUNK = 1024
-RECORD_SECONDS = 5
+RECORD_SECONDS = 7
 WAVE_OUTPUT_FILENAME = "output.wav"
  
 
@@ -36,13 +36,13 @@ def listen():
     waveFile.setframerate(RATE)
     waveFile.writeframes(b''.join(frames))
     waveFile.close()
+    return WAVE_OUTPUT_FILENAME
 
-    song = AudioSegment.from_wav(WAVE_OUTPUT_FILENAME)
-    song = song - 20
+def quieter(audiofile):
+    song = AudioSegment.from_wav(audiofile)
+    song = song - 10
     song.export("quieter.wav", "wav")
-    return "output.wav"
-
-
+    return "quiter.wav"
 
 def main():
     """ Runs the main program """

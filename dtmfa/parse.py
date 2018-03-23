@@ -8,7 +8,7 @@ from scipy.io.wavfile import read
 import method4py
 
 freq = 8000
-debugFlag = False
+debugFlag = True
 dtmf = DTMFdetector(freq,debugFlag)
 
 def method1(audio_file):

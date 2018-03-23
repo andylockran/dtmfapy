@@ -247,7 +247,7 @@ class DTMFdetector(object):
 		MIN_CONSECUTIVE = 2
 		#characters in a row
 		#with no more than
-		MAX_GAP = 0.3000
+		MAX_GAP = 0.100
 		#seconds between each consecutive characters
 		#otherwise we'll think they've pressed the same
 		#key twice
