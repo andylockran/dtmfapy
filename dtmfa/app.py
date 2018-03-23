@@ -48,12 +48,12 @@ def main():
     """ Runs the main program """
     audiodata = listen();
     #audiodata = quieter('output.wav') ## Used to reduce the dB of the audio.. Not really required now
-    parse.method5(audiodata)
-    return True
+    return parse.method5(audiodata)
+    #return True
 
 
 def parseFile(filename):
-    parse.method5(filename)
+    returnparse.method5(filename)
     return True
 
 
