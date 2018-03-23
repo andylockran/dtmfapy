@@ -85,7 +85,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     print(args)
     if not (vars(args))['filename']:
-        dynamic_main();
+        main();
     else:
         filename = (vars(args))['filename']
         parseFile(filename)
