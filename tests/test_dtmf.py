@@ -41,5 +41,5 @@ class TestDTMF(unittest.TestCase):
             expected = re.split('.', filename)[0]
             testfile = cwd + "/audio/" + filename
             result = parse.method5(testfile)
-            asseqrt expected==result
+            assert expected==result
         
