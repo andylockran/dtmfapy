@@ -5,10 +5,18 @@ import argparse
 
 import parse
 
+from DTMFdetector import DTMFdetector
+
+import sys
+
+freq = 8000
+debugFlag = True
+dtmf = DTMFdetector(freq,debugFlag)
+
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 8000
-CHUNK = 1024
+CHUNK = 1
 RECORD_SECONDS = 7
 WAVE_OUTPUT_FILENAME = "output.wav"
  
@@ -44,12 +52,16 @@ def listen():
 #     song.export("quieter.wav", "wav")
 #     return "quieter.wav"
 
-def main():
+def static_main():
     """ Runs the main program """
     audiodata = listen();
     #audiodata = quieter('output.wav') ## Used to reduce the dB of the audio.. Not really required now
     parse.method5(audiodata)
     return True
+
+def dynamic_main():
+    """ Listens dynamically"""
+    data = dtmf.getDTMFLive()
 
 
 def parseFile(filename):
@@ -73,7 +85,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     print(args)
     if not (vars(args))['filename']:
-        main();
+        dynamic_main();
     else:
         filename = (vars(args))['filename']
         parseFile(filename)

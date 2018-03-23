@@ -410,11 +410,11 @@ class DTMFdetector(object):
 			frames.append(data)
 			(sample,) = struct.unpack("h", data)
 			hash_received = self.goertzel(sample)
-			print(hash_received)
 		stream.close()
 		self.clean_up_processing()
 		print self.charStr
-		print "finished recording"
+		print "Finished recording"
+		return self.charStr
 		
 
 
