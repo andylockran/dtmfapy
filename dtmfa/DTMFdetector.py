@@ -77,7 +77,7 @@ import pyaudio
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 8000
-CHUNK = 1
+CHUNK = 1024
 RECORD_SECONDS = 30
 
 class DTMFdetector(object):
@@ -407,9 +407,14 @@ class DTMFdetector(object):
 		hash_received = None
 		while hash_received is None:
 			data = stream.read(CHUNK)
-			frames.append(data)
-			(sample,) = struct.unpack("h", data)
-			hash_received = self.goertzel(sample)
+			chars = 2
+			print(len(data))
+			chunks = [data[i:i+chars] for i in range(0, len(data), chars)]
+			print(chunks)
+			for chunk in chunks:
+				frames.append(chunk)
+				(sample,) = struct.unpack("h", chunk)
+				hash_received = self.goertzel(sample)
 		stream.close()
 		self.clean_up_processing()
 		print self.charStr
