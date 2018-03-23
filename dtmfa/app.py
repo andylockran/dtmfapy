@@ -59,7 +59,7 @@ def static_main():
     return parse.method5(audiodata)
     #return True
 
-def dynamic_main():
+def main():
     """ Listens dynamically"""
     data = dtmf.getDTMFLive()
 
