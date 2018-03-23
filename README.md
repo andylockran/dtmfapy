@@ -5,6 +5,8 @@ This is the python repo that listens to DTMF tones and prints them out.
 
 ## Setup
 
+Install portaudio
+`brew install portaudio`
 
 Install virtualenv
 `pip install virtualenv`
