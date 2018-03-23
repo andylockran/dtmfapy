@@ -36,7 +36,6 @@ class TestDTMF(unittest.TestCase):
     def test_all_audiofiles(self):
         """Tests all audio files in the audio folder"""
         cwd = os.getcwd()
-        print(cwd)
         results = []
         for filename in os.listdir('audio/'):
             expected = re.split('.wav', filename)[0]
@@ -49,7 +48,6 @@ class TestDTMF(unittest.TestCase):
                 results.append(filename)
                 results.append(False)
                 print("Expected: %s, Received: %s" % (expected, result))
-        print(results)
         assert(False not in results)
 
         
