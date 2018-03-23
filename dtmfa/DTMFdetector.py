@@ -238,7 +238,6 @@ class DTMFdetector(object):
 					print "peak count is to high: ", peak_count
 			
 			if see_digit:
-				print("See Digit")
 				if self.debug:
 					print row_col_ascii_codes[row][col-4] #for debugging
 				#stores the character found, and the time in the file in seconds in which the file was found
@@ -246,7 +245,8 @@ class DTMFdetector(object):
 			
 		if len(self.characters) > 1:
 			lastvalue = self.characters[-1]
-			if lastvalue[0] == "#":
+			if lastvalue[0] in ["#", "a"]:
+    				print self.characters
 				return "Hash"
 
 	###########################################
@@ -408,16 +408,13 @@ class DTMFdetector(object):
 		while hash_received is None:
 			data = stream.read(CHUNK)
 			chars = 2
-			print(len(data))
 			chunks = [data[i:i+chars] for i in range(0, len(data), chars)]
-			print(chunks)
 			for chunk in chunks:
 				frames.append(chunk)
 				(sample,) = struct.unpack("h", chunk)
 				hash_received = self.goertzel(sample)
 		stream.close()
 		self.clean_up_processing()
-		print self.charStr
 		print "Finished recording"
 		return self.charStr
 		

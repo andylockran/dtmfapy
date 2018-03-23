@@ -1,4 +1,5 @@
 from pynput.keyboard import Key, Controller
+import re
 
 keyboard = Controller()
 
@@ -25,6 +26,7 @@ keyboard = Controller()
 from dtmfa import app
 keycodes = app.main()
 
+#re.sub('a', '', keycodes)
 
 keyboard.type(keycodes)
 keyboard.press(Key.enter)

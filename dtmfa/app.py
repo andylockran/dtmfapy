@@ -10,7 +10,7 @@ from DTMFdetector import DTMFdetector
 import sys
 
 freq = 8000
-debugFlag = True
+debugFlag = False
 dtmf = DTMFdetector(freq,debugFlag)
 
 FORMAT = pyaudio.paInt16
