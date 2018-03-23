@@ -3,5 +3,6 @@ python:
   - "2.7"
 language: python
 script: travis_wait 30 python -m pytest tests/
-before_install: sudo apt-get install -y python-pyaudio python3-pyaudio
-install: pip install -r requirements.txt
+install: 
+  - sudo apt-get install -y python-pyaudio python3-pyaudio
+  - pip install -r requirements.txt
